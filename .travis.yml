@@ -17,9 +17,6 @@ install:
 before_script:
 - mvn clean
 
-script:
-- mvn test -Dtest=com.napier.sem.AppTest
-
 jobs:
   include:
   - stage: unit tests
@@ -32,10 +29,12 @@ jobs:
   - stage: deploy
     install: skip
     jdk: oraclejdk11
-    script: echo "Deploy"
+    script:
+    - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
+    - docker-compose up --abort-on-container-exit
 
 stages:
-  - unit tests
-  - integration tests
-  - name: deploy
-    if: branch = master
+- unit tests
+- integration tests
+- name: deploy
+  if: branch = master
