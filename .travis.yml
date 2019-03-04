@@ -32,4 +32,4 @@ jobs:
   - stage: deploy
     install: skip
     jdk: oraclejdk11
-    script: echo "Deploy
+    script: echo "Deploy"
