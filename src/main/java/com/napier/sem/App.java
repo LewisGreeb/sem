@@ -9,6 +9,28 @@ public class App {
      */
     private Connection con = null;
 
+
+    public static void main(String[] args) {
+        // Create new Application
+        App a = new App();
+
+        // Connect to database
+        if (args.length < 1) {
+            a.connect("localhost:33060");
+        } else {
+            a.connect(args[0]);
+        }
+
+        Department dept = a.getDepartment("Sales");
+        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
+
+        // Print salary report
+        a.printSalaries(employees);
+
+        // Disconnect from database
+        a.disconnect();
+    }
+
     /**
      * Connect to the MySQL database.
      */
@@ -52,27 +74,6 @@ public class App {
                 System.out.println("Error closing connection to database");
             }
         }
-    }
-
-    public static void main(String[] args) {
-        // Create new Application
-        App a = new App();
-
-        // Connect to database
-        if (args.length < 1) {
-            a.connect("localhost:3306");
-        } else {
-            a.connect(args[0]);
-        }
-
-        Department dept = a.getDepartment("Sales");
-        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
-
-        // Print salary report
-        a.printSalaries(employees);
-
-        // Disconnect from database
-        a.disconnect();
     }
 
     public Employee getEmployee(int ID) {
